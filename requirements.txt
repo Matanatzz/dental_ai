@@ -1,0 +1,5 @@
+streamlit
+openai
+llama-cpp-python
+pytesseract
+Pillow
