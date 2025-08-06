@@ -1,20 +1,13 @@
 import streamlit as st
 import pytesseract
 from PIL import Image
-from dental_ai import backend_api, backend_local
+from dental_ai import backend_api
 
 st.set_page_config(page_title="Dental AI Anamnesis Tool", layout="wide")
 st.title("🦷 Dental AI Anamnesis Processor")
 
-backend_choice = st.radio("Choose backend", ("OpenAI API", "Local LLaMA model"))
-
-api_key = None
-if backend_choice == "OpenAI API":
-    api_key = st.text_input("OpenAI API Key (leave empty to use default)", type="password")
-
-model_path = None
-if backend_choice == "Local LLaMA model":
-    model_path = st.text_input("Path to local LLaMA model", value="models/llama-2-7b.Q4_K_M.gguf")
+# API key input
+api_key = st.text_input("OpenAI API Key (leave empty to use default)", type="password")
 
 st.subheader("Anamnesis Input")
 
@@ -53,11 +46,7 @@ with col2:
             st.error("Please enter or capture anamnesis text first.")
         else:
             st.info("Processing...")
-            if backend_choice == "OpenAI API":
-                backend = backend_api.APIBackend(api_key=api_key if api_key else None)
-            else:
-                backend = backend_local.LocalBackend(model_path)
-
+            backend = backend_api.APIBackend(api_key=api_key if api_key else None)
             output = backend.process(st.session_state.anamnesis_text)
             st.subheader("Processed Output")
             st.text_area("Output", output, height=400)
