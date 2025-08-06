@@ -19,13 +19,17 @@ if "anamnesis_text" not in st.session_state:
 def clear_text():
     st.session_state.anamnesis_text = ""
 
-# Camera capture
-st.write("📷 Or capture from camera:")
-img = st.camera_input("Take a photo of the anamnesis")
+# High-resolution camera capture / file upload
+st.write("📷 Capture or upload a photo of the anamnesis:")
+uploaded_img = st.file_uploader(
+    "Take a photo or choose from gallery",
+    type=["jpg", "jpeg", "png"],
+    accept_multiple_files=False
+)
 
-if img is not None:
+if uploaded_img:
     # OCR extraction
-    image = Image.open(img)
+    image = Image.open(uploaded_img)
     extracted_text = pytesseract.image_to_string(image, lang="eng+heb")
     st.success("Text extracted from image:")
     st.write(extracted_text)
