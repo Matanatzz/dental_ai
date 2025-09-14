@@ -139,5 +139,5 @@ PATIENT_EXPLANATION_PROMPT = """
 
 זהו הטקסט הקליני של המטפל, שעליו תבנה את ההסבר:
 
-{diagnosis_text}
+{anamnesis_text}
 """
