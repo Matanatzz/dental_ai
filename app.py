@@ -40,6 +40,15 @@ if uploaded_img:
 # Manual text entry (linked to session state)
 st.text_area("Enter anamnesis text", height=300, key="anamnesis_text")
 
+# Mode selection
+st.subheader("Choose Output Mode")
+mode = st.radio(
+    "Select the type of output you want:",
+    options=["Clinician Report", "Patient Explanation (Hebrew)"],
+    horizontal=True
+)
+mode_key = "clinician" if mode == "Clinician Report" else "patient"
+
 # Buttons
 col1, col2 = st.columns([1, 1])
 with col1:
@@ -51,6 +60,6 @@ with col2:
         else:
             st.info("Processing...")
             backend = backend_api.APIBackend(api_key=api_key if api_key else None)
-            output = backend.process(st.session_state.anamnesis_text)
+            output = backend.process(st.session_state.anamnesis_text, mode=mode_key)
             st.subheader("Processed Output")
             st.text_area("Output", output, height=400)
