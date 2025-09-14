@@ -1,6 +1,6 @@
 import os
 from openai import OpenAI
-from dental_ai.prompts import REWRITE_AND_CLASSIFY_PROMPT, PATIENT_FRIENDLY_EXPLANATION_PROMPT
+from dental_ai.prompts import REWRITE_AND_CLASSIFY_PROMPT, PATIENT_EXPLANATION_PROMPT
 
 class APIBackend:
     def __init__(self, api_key=None, model_name="gpt-4o"):
@@ -16,7 +16,7 @@ class APIBackend:
         if mode == "clinician":
             prompt = REWRITE_AND_CLASSIFY_PROMPT.format(anamnesis_text=anamnesis_text)
         elif mode == "patient":
-            prompt = PATIENT_FRIENDLY_EXPLANATION_PROMPT.format(anamnesis_text=anamnesis_text)
+            prompt = PATIENT_EXPLANATION_PROMPT.format(anamnesis_text=anamnesis_text)
         else:
             raise ValueError(f"Unknown mode: {mode}")
 
